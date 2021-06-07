@@ -1,0 +1,109 @@
+1.	CREATING A TABLE
+
+CREATE TABLE STUDENTS(
+	student_epita_email varchar(255) PRIMARY KEY,
+	student_contact_ref varchar(255) NOT NULL,
+	student_enrollment_status char(50) NOT NULL,
+	student_population_period_ref char(10) NOT NULL,
+	student_population_code_ref char(5) NOT NULL
+);
+
+2.	Select * from students;
+
+
+3.	INSERT A ROW OF DATA INTO A TABLE
+
+INSERT INTO STUDENTS 
+(student_epita_email, student_contact_ref, student_enrollment_status, student_population_period_ref, student_population_code_ref)			
+VALUES						
+    ('mohammad-mansoor.ahmadi@epita.fr', 'ahmadi.mansoor@outlook.com', 'confirmed', 'SPRING', 'SE');
+
+ 
+
+4.	DROPING A COLUMN
+ALTER TABLE STUDENTS DROP COLUMN "bdate";
+
+
+5.	DUPLICATING COLUMNS: columns must exist duplicating it. We 1st add two columns and then duplicate it.
+
+ALTER TABLE DOCTORS ADD COLUMN "newCol" DATE;
+ALTER TABLE DOCTORS ADD COLUMN "bdate" DATE;
+UPDATE DOCTORS SET "newCol" = "bdate";
+
+
+6.	DROPING A TABLE
+DROP TABLE STUDENTS;
+
+
+7.	CREATING A PRIMARY KEY
+ALTER TABLE ONLY STUDENTS ADD CONSTRAINT student_epita_email PRIMARY KEY (student_epita_email);
+
+
+8.	CREATING A FOREIGN KEY
+CREATE TABLE STUDENTS(
+	student_epita_email varchar(255) NOT NULL,
+	student_contact_ref varchar(255) NOT NULL,
+	student_enrollment_status char(50) NOT NULL,
+	student_population_period_ref char(10) NOT NULL,
+	student_population_code_ref char(5) NOT NULL
+);
+-- Creating a Primary Key
+ALTER TABLE ONLY STUDENTS ADD CONSTRAINT student_epita_email PRIMARY KEY (student_epita_email);
+
+-- Adding the Column of the Targeted Table 
+ALTER TABLE STUDENTS ADD COLUMN "doc_physicianidnumber" INTEGER;
+
+
+-- Creating a Foreign Key for students table - created the primary column of doctors in students table.
+ALTER TABLE STUDENTS ADD CONSTRAINT doc_pk FOREIGN KEY (doc_physicianidnumber) 
+REFERENCES DOCTORS (doc_physicianidnumber) ON DELETE SET NULL;
+
+
+
+9.	UPDATING VALUE IN ROWS: We changed it to unconfirmed from confirm
+
+UPDATE students SET student_enrollment_status = 'unconfirmed' WHERE student_contact_ref='ahmadi.mansoor@outlook.com';
+
+ 
+LIST OF PRACTICED COMMANDS
+select * from students;
+DROP TABLE STUDENTS;
+
+ALTER TABLE STUDENTS DROP COLUMN "doc_id";
+
+
+CREATE TABLE STUDENTS(
+	student_epita_email varchar(255) NOT NULL,
+	student_contact_ref varchar(255) NOT NULL,
+	student_enrollment_status char(50) NOT NULL,
+	student_population_period_ref char(10) NOT NULL,
+	student_population_code_ref char(5) NOT NULL
+);
+
+-- Creating a Primary Key
+ALTER TABLE ONLY STUDENTS ADD CONSTRAINT student_epita_email PRIMARY KEY (student_epita_email);
+
+-- Creating a Foreign Key
+ALTER TABLE STUDENTS ADD CONSTRAINT doc_pk FOREIGN KEY (doc_physicianidnumber) 
+REFERENCES DOCTORS (doc_physicianidnumber) ON DELETE SET NULL;
+
+-- Adding a column
+ALTER TABLE STUDENTS ADD COLUMN "bdate" INTEGER;
+
+-- Adding primary key column of another table in students
+ALTER TABLE STUDENTS ADD COLUMN "doc_physicianidnumber" INTEGER;
+
+-- Inserting Rows of Data
+INSERT INTO STUDENTS 
+(student_epita_email, student_contact_ref, student_enrollment_status, 
+student_population_period_ref, student_population_code_ref)			
+VALUES						
+    ('mansoor.ahmadi@epita.fr', 'ahmad.xxxx@outlook.com', 'confirmed', 'SPRING', 'SE');
+
+-- Duplicating columns
+ALTER TABLE DOCTORS ADD COLUMN "newCol" DATE;
+ALTER TABLE DOCTORS ADD COLUMN "bdate" DATE;
+UPDATE DOCTORS SET "newCol" = "bdate";
+
+-- Updating a Row
+UPDATE students SET student_enrollment_status = 'unconfirmed' WHERE student_contact_ref='ahmad.xxxx@outlook.com';
